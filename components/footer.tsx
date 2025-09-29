@@ -17,9 +17,11 @@ export function Footer() {
               vašeg biznisa.
             </p>
             <div className="flex gap-2">
-              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
-                <MessageCircle className="h-4 w-4 mr-2" />
-                WhatsApp
+              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white" asChild>
+                <a href="https://wa.me/15202389320" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  WhatsApp
+                </a>
               </Button>
             </div>
           </div>
@@ -101,9 +103,16 @@ export function Footer() {
                 <Mail className="h-4 w-4" />
                 info@mojasistent.ba
               </li>
-              <li className="flex items-center gap-2 text-muted-foreground">
-                <MessageCircle className="h-4 w-4" />
-                +387 XX XXX XXX
+              <li className="flex items-center gap-2">
+                <MessageCircle className="h-4 w-4 text-muted-foreground" />
+                <a
+                  href="https://wa.me/15202389320"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  +1 (520) 238-9320
+                </a>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="h-4 w-4" />

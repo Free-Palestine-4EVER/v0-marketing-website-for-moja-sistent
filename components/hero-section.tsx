@@ -27,7 +27,7 @@ export function HeroSection() {
               <span className="text-foreground">Vaši pomoćnici koji nikad ne spavaju.</span>
             </h1>
 
-            <p className="text-xl text-muted-foreground mt-6 text-pretty max-w-2xl animate-in slide-in-from-left duration-700 delay-200">
+            <p className="text-xl text-muted-foreground mt-6 text-pretty max-w-2xl mx-auto animate-in slide-in-from-left duration-700 delay-200">
               Iznajmite chatbote koji odgovaraju na upite, vode rezervacije i rješavaju FAQ – na društvenim mrežama,
               webu i e-mailu. Ja pravim botove po mjeri vašeg posla.
             </p>

@@ -32,8 +32,8 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center gap-3 hover:scale-105 transition-transform">
-            <Image src="/images/logo.png" alt="MojAsistent.ba Logo" width={40} height={40} className="w-10 h-10" />
-            <span className="text-2xl font-bold text-gradient">MojAsistent.ba</span>
+            <Image src="/images/logo.png" alt="MojAsistent.ba Logo" width={48} height={48} className="w-12 h-12" />
+            <span className="text-xl font-bold text-gradient">MojAsistent.ba</span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -46,16 +46,21 @@ export default function ContactPage() {
 
               <div className="space-y-6 mb-8">
                 <Card className="p-6 bg-card/50 backdrop-blur-sm border-2 border-border/50">
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 rounded-xl bg-primary/10 text-primary">
+                  <a
+                    href="https://wa.me/15202389320"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 hover:opacity-80 transition-opacity"
+                  >
+                    <div className="p-3 rounded-xl bg-green-600/10 text-green-600">
                       <MessageCircle className="h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-semibold">WhatsApp</h3>
-                      <p className="text-muted-foreground">+387 XX XXX XXX</p>
+                      <p className="text-muted-foreground">+1 (520) 238-9320</p>
                       <p className="text-sm text-muted-foreground">Najbrži način komunikacije</p>
                     </div>
-                  </div>
+                  </a>
                 </Card>
 
                 <Card className="p-6 bg-card/50 backdrop-blur-sm border-2 border-border/50">
