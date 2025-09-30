@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
     // Send email to admin
     const { data: adminData, error: adminError } = await resend.emails.send({
-      from: "MojaSistent.ba <info@mojasistent.ba>",
+      from: "MojAsistent.ba <info@mojasistent.ba>",
       to: "info@mojasistent.ba",
       subject: `Nova prijava za partnerstvo - ${companyName}`,
       react: PartnerEmailTemplate({
@@ -33,9 +33,9 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to partner
     const { data: partnerData, error: partnerError } = await resend.emails.send({
-      from: "MojaSistent.ba <info@mojasistent.ba>",
+      from: "MojAsistent.ba <info@mojasistent.ba>",
       to: email,
-      subject: "Hvala na interesovanju za partnerstvo - MojaSistent.ba",
+      subject: "Hvala na interesovanju za partnerstvo - MojAsistent.ba",
       react: PartnerEmailTemplate({
         companyName,
         contactPerson,

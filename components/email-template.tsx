@@ -23,10 +23,26 @@ const botNames: Record<string, string> = {
   voice: "Voice Call Bot (Premium)",
 }
 
+const botPrices: Record<string, { price: number; originalPrice: number; premium: boolean }> = {
+  whatsapp: { price: 100, originalPrice: 200, premium: false },
+  instagram: { price: 100, originalPrice: 200, premium: false },
+  facebook: { price: 100, originalPrice: 200, premium: false },
+  web: { price: 100, originalPrice: 200, premium: false },
+  email: { price: 100, originalPrice: 200, premium: false },
+  "instagram-post": { price: 500, originalPrice: 500, premium: true },
+  voice: { price: 750, originalPrice: 750, premium: true },
+}
+
 const packageNames: Record<string, string> = {
   single: "Pojedinačni bot",
   five: "Paket 5 botova",
   army: "Assistant Army (7 botova)",
+}
+
+const packageDetails: Record<string, { bots: number; price: number; originalPrice: number }> = {
+  single: { bots: 1, price: 100, originalPrice: 200 },
+  five: { bots: 5, price: 350, originalPrice: 750 },
+  army: { bots: 7, price: 2000, originalPrice: 2000 },
 }
 
 export const ContactEmailTemplate: React.FC<Readonly<ContactEmailTemplateProps>> = ({
@@ -298,6 +314,15 @@ export const ContactEmailTemplate: React.FC<Readonly<ContactEmailTemplateProps>>
                             </div>
                             <div
                               style={{
+                                fontSize: "13px",
+                                color: "#4a5568",
+                                marginBottom: "4px",
+                              }}
+                            >
+                              {packageDetails[selectedPackage]?.bots} botova uključeno
+                            </div>
+                            <div
+                              style={{
                                 fontSize: "12px",
                                 color: "#667eea",
                                 fontWeight: "600",
@@ -306,31 +331,132 @@ export const ContactEmailTemplate: React.FC<Readonly<ContactEmailTemplateProps>>
                               🎉 50% POPUST - Prvih 3 mjeseca
                             </div>
                           </div>
+                          <div style={{ textAlign: "right" }}>
+                            <div
+                              style={{
+                                fontSize: "18px",
+                                fontWeight: "700",
+                                color: "#667eea",
+                              }}
+                            >
+                              {packageDetails[selectedPackage]?.price} BAM
+                            </div>
+                            {packageDetails[selectedPackage]?.originalPrice !==
+                              packageDetails[selectedPackage]?.price && (
+                              <div
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#718096",
+                                  textDecoration: "line-through",
+                                }}
+                              >
+                                {packageDetails[selectedPackage]?.originalPrice} BAM
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     ) : (
-                      selectedBots.map((botId) => (
-                        <div
-                          key={botId}
-                          style={{
-                            backgroundColor: "#ffffff",
-                            borderRadius: "8px",
-                            padding: "12px 16px",
-                            marginBottom: "8px",
-                            border: "1px solid #e2e8f0",
-                          }}
-                        >
+                      <>
+                        {selectedBots.map((botId) => {
+                          const botInfo = botPrices[botId]
+                          return (
+                            <div
+                              key={botId}
+                              style={{
+                                backgroundColor: "#ffffff",
+                                borderRadius: "8px",
+                                padding: "12px 16px",
+                                marginBottom: "8px",
+                                border: "1px solid #e2e8f0",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <div>
+                                <div
+                                  style={{
+                                    fontSize: "14px",
+                                    fontWeight: "500",
+                                    color: "#2d3748",
+                                    marginBottom: "2px",
+                                  }}
+                                >
+                                  ✓ {botNames[botId] || botId}
+                                </div>
+                                {!botInfo?.premium && (
+                                  <div
+                                    style={{
+                                      fontSize: "11px",
+                                      color: "#667eea",
+                                      fontWeight: "600",
+                                    }}
+                                  >
+                                    50% popust - Prvih 3 mj.
+                                  </div>
+                                )}
+                              </div>
+                              <div style={{ textAlign: "right" }}>
+                                <div
+                                  style={{
+                                    fontSize: "14px",
+                                    fontWeight: "600",
+                                    color: "#2d3748",
+                                  }}
+                                >
+                                  {botInfo?.price || 0} BAM
+                                </div>
+                                {!botInfo?.premium && botInfo?.originalPrice !== botInfo?.price && (
+                                  <div
+                                    style={{
+                                      fontSize: "11px",
+                                      color: "#718096",
+                                      textDecoration: "line-through",
+                                    }}
+                                  >
+                                    {botInfo?.originalPrice} BAM
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )
+                        })}
+                        {selectedBots.length > 1 && (
                           <div
                             style={{
-                              fontSize: "14px",
-                              fontWeight: "500",
-                              color: "#2d3748",
+                              backgroundColor: "#f7fafc",
+                              borderRadius: "8px",
+                              padding: "12px 16px",
+                              marginTop: "12px",
+                              border: "1px solid #cbd5e0",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
                             }}
                           >
-                            ✓ {botNames[botId] || botId}
+                            <div
+                              style={{
+                                fontSize: "14px",
+                                fontWeight: "600",
+                                color: "#2d3748",
+                              }}
+                            >
+                              Ukupno ({selectedBots.length}{" "}
+                              {selectedBots.length === 1 ? "bot" : selectedBots.length < 5 ? "bota" : "botova"}):
+                            </div>
+                            <div
+                              style={{
+                                fontSize: "16px",
+                                fontWeight: "700",
+                                color: "#667eea",
+                              }}
+                            >
+                              {selectedBots.reduce((sum, botId) => sum + (botPrices[botId]?.price || 0), 0)} BAM
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        )}
+                      </>
                     )}
                   </div>
 
@@ -468,7 +594,7 @@ export const ContactEmailTemplate: React.FC<Readonly<ContactEmailTemplateProps>>
                       color: "#ffffff",
                     }}
                   >
-                    MojaSistent.ba
+                    MojAsistent.ba
                   </p>
                   <p
                     style={{
@@ -527,7 +653,7 @@ export const ContactEmailTemplate: React.FC<Readonly<ContactEmailTemplateProps>>
                       color: "#718096",
                     }}
                   >
-                    © 2025 MojaSistent.ba. Sva prava zadržana.
+                    © 2025 MojAsistent.ba. Sva prava zadržana.
                   </p>
                 </td>
               </tr>

@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { MessageCircle, Play } from "lucide-react"
+import { MessageCircle, DollarSign } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -47,10 +47,10 @@ export function HeroSection() {
                 variant="outline"
                 size="lg"
                 className="text-lg px-8 py-4 border-2 bg-transparent hover:bg-muted/50 hover:scale-105 transition-all"
-                onClick={() => document.getElementById("kako-radi")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => document.getElementById("cijene")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <Play className="mr-2 h-5 w-5" />
-                Pogledaj kako radi
+                <DollarSign className="mr-2 h-5 w-5" />
+                Pogledaj cijene
               </Button>
             </div>
           </div>

@@ -22,9 +22,9 @@ export async function POST(request: Request) {
 
     // Send email to client
     const { data, error } = await resend.emails.send({
-      from: "MojaSistent.ba <info@mojasistent.ba>",
+      from: "MojAsistent.ba <info@mojasistent.ba>",
       to: [email],
-      subject: "Potvrda vašeg zahtjeva - MojaSistent.ba 🤖",
+      subject: "Potvrda vašeg zahtjeva - MojAsistent.ba 🤖",
       react: ContactEmailTemplate({
         firstName,
         lastName,
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 
     // Optionally send notification to admin
     await resend.emails.send({
-      from: "MojaSistent.ba <info@mojasistent.ba>",
+      from: "MojAsistent.ba <info@mojasistent.ba>",
       to: ["info@mojasistent.ba"],
       subject: `Novi zahtjev od ${firstName} ${lastName}`,
       react: ContactEmailTemplate({

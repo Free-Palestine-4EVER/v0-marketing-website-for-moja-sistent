@@ -98,7 +98,7 @@ export const PartnerEmailTemplate: React.FC<PartnerEmailTemplateProps> = ({
           </div>
         </div>
         <div style={{ backgroundColor: "#f8f9fa", padding: "20px", textAlign: "center" }}>
-          <p style={{ margin: 0, color: "#6b7280", fontSize: "14px" }}>© 2025 MojaSistent.ba</p>
+          <p style={{ margin: 0, color: "#6b7280", fontSize: "14px" }}>© 2025 MojAsistent.ba</p>
         </div>
       </div>
     )
@@ -150,11 +150,11 @@ export const PartnerEmailTemplate: React.FC<PartnerEmailTemplateProps> = ({
         <p style={{ fontSize: "16px", lineHeight: "1.6", color: "#4b5563", marginBottom: 0 }}>
           Srdačan pozdrav,
           <br />
-          <strong>MojaSistent.ba tim</strong>
+          <strong>MojAsistent.ba tim</strong>
         </p>
       </div>
       <div style={{ backgroundColor: "#f8f9fa", padding: "20px", textAlign: "center" }}>
-        <p style={{ margin: 0, color: "#6b7280", fontSize: "14px" }}>© 2025 MojaSistent.ba</p>
+        <p style={{ margin: 0, color: "#6b7280", fontSize: "14px" }}>© 2025 MojAsistent.ba</p>
       </div>
     </div>
   )

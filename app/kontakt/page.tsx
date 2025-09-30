@@ -87,13 +87,20 @@ export default function ContactPage() {
   const calculateTotal = () => {
     if (selectedPackage) {
       const pkg = packages.find((p) => p.id === selectedPackage)
-      return pkg ? pkg.price : 0
+      const packagePrice = pkg ? pkg.price : 0
+      console.log("[v0] Package selected:", selectedPackage, "Price:", packagePrice)
+      return packagePrice
     }
 
-    return selectedBots.reduce((total, botId) => {
+    const total = selectedBots.reduce((total, botId) => {
       const bot = botTypes.find((b) => b.id === botId)
-      return total + (bot?.price || 0)
+      const botPrice = bot?.price || 0
+      console.log("[v0] Adding bot:", botId, "Price:", botPrice, "Running total:", total + botPrice)
+      return total + botPrice
     }, 0)
+
+    console.log("[v0] Final calculated total:", total, "Selected bots:", selectedBots)
+    return total
   }
 
   const totalPrice = calculateTotal()
@@ -102,12 +109,18 @@ export default function ContactPage() {
   const toggleBot = (botId: string, e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    if (selectedPackage) {
+      setSelectedPackage(null)
+    }
     setSelectedBots((prev) => (prev.includes(botId) ? prev.filter((id) => id !== botId) : [...prev, botId]))
   }
 
   const selectPackage = (packageId: string, e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    if (selectedBots.length > 0) {
+      setSelectedBots([])
+    }
     setSelectedPackage((prev) => (prev === packageId ? null : packageId))
   }
 
@@ -118,8 +131,8 @@ export default function ContactPage() {
     console.log("[v0] Selected bots:", selectedBots)
     console.log("[v0] Selected bots count:", selectedBots.length)
     console.log("[v0] Selected package:", selectedPackage)
+    console.log("[v0] Total price:", totalPrice)
 
-    // Validation
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.business) {
       console.log("[v0] Validation failed: missing required fields")
       toast.error("Molimo popunite sva obavezna polja")
@@ -132,7 +145,6 @@ export default function ContactPage() {
       return
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email)) {
       console.log("[v0] Validation failed: invalid email")
@@ -174,7 +186,6 @@ export default function ContactPage() {
 
       setIsSubmitted(true)
 
-      // Reset form
       setFormData({
         firstName: "",
         lastName: "",
@@ -261,7 +272,6 @@ export default function ContactPage() {
     <main className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 overflow-x-hidden w-full">
       <Navigation />
 
-      {/* Header */}
       <section className="pt-24 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center gap-4 mb-6">
@@ -273,7 +283,6 @@ export default function ContactPage() {
             </Button>
           </div>
 
-          {/* Promotional Banner - Reduced padding and sizes */}
           <div className="mb-6 max-w-4xl mx-auto">
             <Card className="border-2 border-primary bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 shadow-lg">
               <CardContent className="p-4">
@@ -317,14 +326,11 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Main Booking Form */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <form onSubmit={handleSubmit}>
             <div className="grid lg:grid-cols-3 gap-6">
-              {/* Left Column - Bot Selection */}
               <div className="lg:col-span-2 space-y-6">
-                {/* Step 1: Package Selection - Reduced padding and spacing */}
                 <Card className="border-2 border-primary/20 bg-card/50 backdrop-blur-sm shadow-xl">
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-3 mb-1">
@@ -338,7 +344,6 @@ export default function ContactPage() {
                     </p>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    {/* Package Options - Reduced padding */}
                     <div className="grid md:grid-cols-3 gap-3 mb-4">
                       {packages.map((pkg) => (
                         <Card
@@ -393,7 +398,6 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    {/* Individual Bot Selection - Removed disabled states */}
                     <div className="space-y-2">
                       <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
                         Standardni botovi
@@ -497,7 +501,6 @@ export default function ContactPage() {
                   </CardContent>
                 </Card>
 
-                {/* Step 2: Contact Information - Reduced padding and spacing */}
                 <Card className="border-2 border-primary/20 bg-card/50 backdrop-blur-sm shadow-xl">
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-3 mb-1">
@@ -600,7 +603,6 @@ export default function ContactPage() {
                 </Card>
               </div>
 
-              {/* Right Column - Price Calculator (Sticky) - Reduced padding */}
               <div className="lg:col-span-1">
                 <div className="sticky top-24">
                   <Card className="border-2 border-primary bg-gradient-to-br from-primary/5 via-card to-card backdrop-blur-sm shadow-2xl">
@@ -612,7 +614,6 @@ export default function ContactPage() {
                       <p className="text-xs text-primary font-semibold">🎉 Prvih 3 mjeseca - 50% popust!</p>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      {/* Selected Items */}
                       <div className="space-y-2">
                         <h3 className="font-semibold text-xs text-muted-foreground uppercase tracking-wide">
                           Odabrano:
@@ -691,7 +692,6 @@ export default function ContactPage() {
                         )}
                       </div>
 
-                      {/* Total Price */}
                       {(selectedPackage || selectedBots.length > 0) && (
                         <>
                           <div className="border-t border-border pt-3">
@@ -742,7 +742,6 @@ export default function ContactPage() {
                     </CardContent>
                   </Card>
 
-                  {/* Contact Info Cards - Reduced padding */}
                   <div className="mt-4 space-y-3">
                     <Card className="p-3 bg-card/50 backdrop-blur-sm border-2 border-border/50">
                       <a
