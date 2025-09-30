@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
     // Send email to client
     const { data, error } = await resend.emails.send({
-      from: "MojaSistent.ba <onboarding@resend.dev>",
+      from: "MojaSistent.ba <noreply@mojasistent.ba>",
       to: [email],
       subject: "Potvrda vašeg zahtjeva - MojaSistent.ba 🤖",
       react: ContactEmailTemplate({
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 
     // Optionally send notification to admin
     await resend.emails.send({
-      from: "MojaSistent.ba <onboarding@resend.dev>",
+      from: "MojaSistent.ba <noreply@mojasistent.ba>",
       to: ["info@mojasistent.ba"],
       subject: `Novi zahtjev od ${firstName} ${lastName}`,
       react: ContactEmailTemplate({

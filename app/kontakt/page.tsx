@@ -66,6 +66,7 @@ export default function ContactPage() {
   const [selectedBots, setSelectedBots] = useState<string[]>([])
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -157,6 +158,8 @@ export default function ContactPage() {
       toast.success("Uspješno poslato! Provjerite vaš email.")
       console.log("[v0] Form submitted successfully")
 
+      setIsSubmitted(true)
+
       // Reset form
       setFormData({
         firstName: "",
@@ -174,6 +177,70 @@ export default function ContactPage() {
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  if (isSubmitted) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 overflow-x-hidden w-full">
+        <Navigation />
+        <section className="pt-24 pb-16">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <Card className="border-2 border-primary bg-gradient-to-br from-primary/10 via-card to-card backdrop-blur-sm shadow-2xl">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle2 className="h-10 w-10 text-primary" />
+                </div>
+                <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-4">Hvala vam!</h1>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Vaš zahtjev je uspješno poslat. Provjerite vaš email za potvrdu.
+                </p>
+                <p className="text-base text-muted-foreground mb-8">
+                  Naš tim će vas kontaktirati u roku od 24 sata sa detaljnom ponudom i sljedećim koracima.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
+                    <Link href="/">
+                      <ArrowLeft className="mr-2 h-4 w-4" />
+                      Nazad na početnu
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={() => setIsSubmitted(false)}
+                    className="border-2 border-primary/30 hover:bg-primary/10"
+                  >
+                    Pošaljite novi zahtjev
+                  </Button>
+                </div>
+                <div className="mt-8 pt-8 border-t border-border">
+                  <p className="text-sm text-muted-foreground mb-4">Imate hitno pitanje?</p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                      href="https://wa.me/15202389320"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-medium"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      WhatsApp: +1 (520) 238-9320
+                    </a>
+                    <a
+                      href="mailto:info@mojasistent.ba"
+                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium"
+                    >
+                      <Mail className="h-4 w-4" />
+                      info@mojasistent.ba
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+        <Footer />
+      </main>
+    )
   }
 
   return (
