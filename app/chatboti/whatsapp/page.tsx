@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -83,6 +86,8 @@ const integrationSteps = [
 ]
 
 export default function WhatsAppBotPage() {
+  const router = useRouter()
+
   return (
     <main className="min-h-screen">
       <Navigation />
@@ -109,7 +114,11 @@ export default function WhatsAppBotPage() {
               <p className="text-xl text-muted-foreground mb-8 text-pretty">
                 Automatski odgovara na WhatsApp poruke, vodi rezervacije i pomaže u komunikaciji sa klijentima 24/7.
               </p>
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4"
+                onClick={() => router.push("/kontakt")}
+              >
                 Naruči WhatsApp bota
               </Button>
             </div>
@@ -199,7 +208,11 @@ export default function WhatsAppBotPage() {
             <strong>750 BAM mjesečno</strong>.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4">
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4"
+              onClick={() => router.push("/kontakt")}
+            >
               Naruči WhatsApp bota
             </Button>
             <Button variant="outline" size="lg" className="text-lg px-8 py-4 bg-transparent" asChild>

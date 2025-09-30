@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -78,6 +81,8 @@ const integrationSteps = [
 ]
 
 export default function InstagramBotPage() {
+  const router = useRouter()
+
   return (
     <main className="min-h-screen">
       <Navigation />
@@ -105,7 +110,11 @@ export default function InstagramBotPage() {
                 Automatski odgovara na komentare i direktne poruke, vodi rezervacije i pomaže u komunikaciji sa
                 pratiteljima na Instagramu.
               </p>
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4"
+                onClick={() => router.push("/kontakt")}
+              >
                 Naruči Instagram bota
               </Button>
             </div>
@@ -195,7 +204,11 @@ export default function InstagramBotPage() {
             <strong>750 BAM mjesečno</strong>.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4">
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4"
+              onClick={() => router.push("/kontakt")}
+            >
               Naruči Instagram bota
             </Button>
             <Button variant="outline" size="lg" className="text-lg px-8 py-4 bg-transparent" asChild>

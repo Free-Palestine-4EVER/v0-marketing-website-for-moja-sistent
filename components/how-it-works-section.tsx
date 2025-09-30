@@ -1,3 +1,6 @@
+"use client"
+
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { MessageCircle, Settings, Rocket } from "lucide-react"
 
@@ -29,6 +32,8 @@ const steps = [
 ]
 
 export function HowItWorksSection() {
+  const router = useRouter()
+
   return (
     <section id="kako-radi" className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
@@ -102,7 +107,11 @@ export function HowItWorksSection() {
         </div>
 
         <div className="text-center mt-12">
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 h-12">
+          <Button
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 h-12"
+            onClick={() => router.push("/kontakt")}
+          >
             Rezerviši demo
           </Button>
           <p className="text-xs text-muted-foreground mt-3">Besplatan razgovor o vašim potrebama • Bez obaveza</p>
