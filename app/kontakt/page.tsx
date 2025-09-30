@@ -94,9 +94,7 @@ export default function ContactPage() {
   const toggleBot = (botId: string) => {
     setSelectedBots((prev) => (prev.includes(botId) ? prev.filter((id) => id !== botId) : [...prev, botId]))
     // Clear package selection when individual bot is selected
-    if (selectedPackage) {
-      setSelectedPackage(null)
-    }
+    setSelectedPackage(null)
   }
 
   const selectPackage = (packageId: string) => {
@@ -111,13 +109,17 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    console.log("[v0] Form submission started")
+
     // Validation
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.business) {
+      console.log("[v0] Validation failed: missing required fields")
       toast.error("Molimo popunite sva obavezna polja")
       return
     }
 
     if (!selectedPackage && selectedBots.length === 0) {
+      console.log("[v0] Validation failed: no bots or package selected")
       toast.error("Molimo odaberite najmanje jedan bot ili paket")
       return
     }
@@ -125,11 +127,13 @@ export default function ContactPage() {
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email)) {
+      console.log("[v0] Validation failed: invalid email")
       toast.error("Molimo unesite validnu email adresu")
       return
     }
 
     setIsSubmitting(true)
+    console.log("[v0] Sending request to API...")
 
     try {
       const response = await fetch("/api/contact", {
@@ -145,13 +149,17 @@ export default function ContactPage() {
         }),
       })
 
+      console.log("[v0] API response status:", response.status)
+
       const data = await response.json()
+      console.log("[v0] API response data:", data)
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to send request")
       }
 
       toast.success("Uspješno poslato! Provjerite vaš email.")
+      console.log("[v0] Form submitted successfully")
 
       // Reset form
       setFormData({
@@ -327,14 +335,14 @@ export default function ContactPage() {
                                 selectedBots.includes(bot.id)
                                   ? "border-2 border-primary bg-primary/5"
                                   : "border-2 border-border/50 hover:border-primary/30"
-                              } ${selectedPackage ? "opacity-50" : ""}`}
-                              onClick={() => toggleBot(bot.id)}
+                              } ${selectedPackage ? "opacity-50 pointer-events-none" : ""}`}
+                              onClick={() => !selectedPackage && toggleBot(bot.id)}
                             >
                               <CardContent className="p-3">
                                 <div className="flex items-start gap-2">
                                   <Checkbox
                                     checked={selectedBots.includes(bot.id)}
-                                    onCheckedChange={() => toggleBot(bot.id)}
+                                    disabled={!!selectedPackage}
                                     className="mt-0.5"
                                   />
                                   <div className="flex-1 min-w-0">
@@ -373,14 +381,14 @@ export default function ContactPage() {
                                 selectedBots.includes(bot.id)
                                   ? "border-primary bg-gradient-to-br from-primary/10 to-primary/5"
                                   : "border-primary/30 bg-gradient-to-br from-primary/5 to-transparent hover:border-primary/50"
-                              } ${selectedPackage ? "opacity-50" : ""}`}
-                              onClick={() => toggleBot(bot.id)}
+                              } ${selectedPackage ? "opacity-50 pointer-events-none" : ""}`}
+                              onClick={() => !selectedPackage && toggleBot(bot.id)}
                             >
                               <CardContent className="p-3">
                                 <div className="flex items-start gap-2">
                                   <Checkbox
                                     checked={selectedBots.includes(bot.id)}
-                                    onCheckedChange={() => toggleBot(bot.id)}
+                                    disabled={!!selectedPackage}
                                     className="mt-0.5"
                                   />
                                   <div className="flex-1 min-w-0">
