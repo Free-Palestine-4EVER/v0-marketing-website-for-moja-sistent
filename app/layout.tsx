@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import Script from "next/script"
 import { PromoModal } from "@/components/promo-modal"
+import { ScrollToTop } from "@/components/scroll-to-top"
 
 export const metadata: Metadata = {
   title: "MojAsistent.ba - AI Zaposlenici koji nikad ne spavaju",
@@ -66,6 +67,7 @@ export default function RootLayout({
   return (
     <html lang="bs">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased overflow-x-hidden`}>
+        <ScrollToTop />
         <Script id="facebook-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -89,7 +91,6 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
-        {/* End of Facebook Pixel tracking code */}
 
         <Suspense fallback={null}>{children}</Suspense>
         <PromoModal />
