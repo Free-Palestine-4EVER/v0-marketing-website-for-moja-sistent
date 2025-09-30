@@ -8,30 +8,56 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowLeft, Mail, MessageCircle, Sparkles, CheckCircle2, Calculator } from "lucide-react"
+import { ArrowLeft, Mail, MessageCircle, Sparkles, CheckCircle2, Calculator, Tag } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
 const botTypes = [
-  { id: "whatsapp", name: "WhatsApp Bot", price: 200, description: "Automatski odgovori na WhatsApp poruke" },
-  { id: "instagram", name: "Instagram Bot", price: 200, description: "Upravljanje Instagram DM-ovima i komentarima" },
-  { id: "facebook", name: "Facebook Bot", price: 200, description: "Automatizacija Facebook Messenger-a" },
-  { id: "web", name: "Web Chat Bot", price: 200, description: "Live chat za vašu web stranicu" },
-  { id: "email", name: "Email Bot", price: 200, description: "Automatsko odgovaranje na emailove" },
+  {
+    id: "whatsapp",
+    name: "WhatsApp Bot",
+    price: 100,
+    originalPrice: 200,
+    description: "Automatski odgovori na WhatsApp poruke",
+  },
+  {
+    id: "instagram",
+    name: "Instagram Bot",
+    price: 100,
+    originalPrice: 200,
+    description: "Upravljanje Instagram DM-ovima i komentarima",
+  },
+  {
+    id: "facebook",
+    name: "Facebook Bot",
+    price: 100,
+    originalPrice: 200,
+    description: "Automatizacija Facebook Messenger-a",
+  },
+  { id: "web", name: "Web Chat Bot", price: 100, originalPrice: 200, description: "Live chat za vašu web stranicu" },
+  { id: "email", name: "Email Bot", price: 100, originalPrice: 200, description: "Automatsko odgovaranje na emailove" },
   {
     id: "instagram-post",
     name: "Instagram Post Bot",
     price: 500,
+    originalPrice: 500,
     description: "Automatsko kreiranje i objavljivanje postova",
     premium: true,
   },
-  { id: "voice", name: "Voice Call Bot", price: 750, description: "AI asistent za telefonske pozive", premium: true },
+  {
+    id: "voice",
+    name: "Voice Call Bot",
+    price: 750,
+    originalPrice: 750,
+    description: "AI asistent za telefonske pozive",
+    premium: true,
+  },
 ]
 
 const packages = [
-  { id: "single", name: "Pojedinačni bot", bots: 1, price: 200, discount: 0 },
-  { id: "five", name: "Paket 5 botova", bots: 5, price: 750, discount: 250 },
-  { id: "army", name: "Assistant Army", bots: 7, price: 2000, discount: 550 },
+  { id: "single", name: "Pojedinačni bot", bots: 1, price: 100, originalPrice: 200, discount: 0, promo: true },
+  { id: "five", name: "Paket 5 botova", bots: 5, price: 350, originalPrice: 750, discount: 400, promo: true },
+  { id: "army", name: "Assistant Army", bots: 7, price: 2000, originalPrice: 2000, discount: 550, promo: false },
 ]
 
 export default function ContactPage() {
@@ -87,6 +113,33 @@ export default function ContactPage() {
             </Button>
           </div>
 
+          {/* Promotional Banner */}
+          <div className="mb-8 max-w-4xl mx-auto">
+            <Card className="border-2 border-primary bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Tag className="h-8 w-8 text-primary" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gradient mb-2">🎉 Specijalna ponuda - 50% popusta!</h3>
+                    <p className="text-lg text-foreground mb-1">
+                      <span className="font-bold">Prvih 3 mjeseca</span> svi chatbotovi samo{" "}
+                      <span className="text-primary font-bold">100 BAM</span> umjesto{" "}
+                      <span className="line-through text-muted-foreground">200 BAM</span>
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Paket 5 botova: <span className="font-semibold text-primary">350 BAM</span> umjesto{" "}
+                      <span className="line-through">750 BAM</span>
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           <div className="text-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-2 mb-4">
               <Sparkles className="h-4 w-4 text-primary" />
@@ -133,11 +186,30 @@ export default function ContactPage() {
                         onClick={() => selectPackage(pkg.id)}
                       >
                         <CardContent className="p-4 text-center">
+                          {pkg.promo && (
+                            <div className="mb-2">
+                              <span className="inline-block bg-primary/20 text-primary px-2 py-1 rounded-full text-xs font-bold">
+                                50% POPUST
+                              </span>
+                            </div>
+                          )}
                           <h3 className="font-bold text-lg mb-2">{pkg.name}</h3>
-                          <div className="text-3xl font-bold text-primary mb-1">{pkg.price} BAM</div>
-                          <p className="text-sm text-muted-foreground mb-2">mjesečno</p>
+                          {pkg.promo ? (
+                            <>
+                              <div className="text-3xl font-bold text-primary mb-1">{pkg.price} BAM</div>
+                              <div className="text-sm line-through text-muted-foreground mb-1">
+                                {pkg.originalPrice} BAM
+                              </div>
+                              <p className="text-xs text-primary font-semibold mb-2">Prvih 3 mjeseca</p>
+                            </>
+                          ) : (
+                            <>
+                              <div className="text-3xl font-bold text-primary mb-1">{pkg.price} BAM</div>
+                              <p className="text-sm text-muted-foreground mb-2">mjesečno</p>
+                            </>
+                          )}
                           <p className="text-xs text-muted-foreground">{pkg.bots} botova</p>
-                          {pkg.discount > 0 && (
+                          {pkg.discount > 0 && pkg.promo && (
                             <div className="mt-2 inline-block bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded-full text-xs font-medium">
                               Ušteda {pkg.discount} BAM
                             </div>
@@ -158,7 +230,13 @@ export default function ContactPage() {
 
                   {/* Individual Bot Selection */}
                   <div className="space-y-3">
-                    <h3 className="font-semibold text-lg mb-4">Standardni botovi (200 BAM/mjesečno)</h3>
+                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                      Standardni botovi
+                      <span className="text-sm font-normal text-muted-foreground">
+                        (<span className="text-primary font-bold">100 BAM</span>{" "}
+                        <span className="line-through">200 BAM</span> - Prvih 3 mjeseca)
+                      </span>
+                    </h3>
                     <div className="grid md:grid-cols-2 gap-3">
                       {botTypes
                         .filter((bot) => !bot.premium)
@@ -180,9 +258,20 @@ export default function ContactPage() {
                                   className="mt-1"
                                 />
                                 <div className="flex-1">
-                                  <h4 className="font-semibold mb-1">{bot.name}</h4>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <h4 className="font-semibold">{bot.name}</h4>
+                                    <span className="text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded-full font-bold">
+                                      -50%
+                                    </span>
+                                  </div>
                                   <p className="text-sm text-muted-foreground mb-2">{bot.description}</p>
-                                  <div className="text-sm font-bold text-primary">{bot.price} BAM/mj</div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="text-sm font-bold text-primary">{bot.price} BAM/mj</div>
+                                    <div className="text-xs line-through text-muted-foreground">
+                                      {bot.originalPrice} BAM
+                                    </div>
+                                  </div>
+                                  <p className="text-xs text-primary font-semibold mt-1">Prvih 3 mjeseca</p>
                                 </div>
                               </div>
                             </CardContent>
@@ -327,7 +416,7 @@ export default function ContactPage() {
                       <Calculator className="h-6 w-6 text-primary" />
                       <CardTitle className="text-2xl">Kalkulator cijene</CardTitle>
                     </div>
-                    <p className="text-sm text-muted-foreground">Vaša mjesečna investicija</p>
+                    <p className="text-sm text-primary font-semibold">🎉 Prvih 3 mjeseca - 50% popust!</p>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Selected Items */}
@@ -348,10 +437,18 @@ export default function ContactPage() {
                                   <div>
                                     <div className="font-semibold">{pkg.name}</div>
                                     <div className="text-xs text-muted-foreground">{pkg.bots} botova uključeno</div>
+                                    {pkg.promo && (
+                                      <div className="text-xs text-primary font-semibold mt-1">Prvih 3 mjeseca</div>
+                                    )}
                                   </div>
                                 </div>
                                 <div className="text-right">
                                   <div className="font-bold text-primary">{pkg.price} BAM</div>
+                                  {pkg.promo && (
+                                    <div className="text-xs line-through text-muted-foreground">
+                                      {pkg.originalPrice} BAM
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             ))}
@@ -370,14 +467,23 @@ export default function ContactPage() {
                                   <CheckCircle2 className="h-4 w-4 text-primary" />
                                   <div>
                                     <div className="font-medium text-sm">{bot.name}</div>
-                                    {bot.premium && (
+                                    {bot.premium ? (
                                       <span className="text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded-full font-medium">
                                         PREMIUM
                                       </span>
+                                    ) : (
+                                      <span className="text-xs text-primary font-semibold">Prvih 3 mj.</span>
                                     )}
                                   </div>
                                 </div>
-                                <div className="font-semibold text-sm">{bot.price} BAM</div>
+                                <div className="text-right">
+                                  <div className="font-semibold text-sm">{bot.price} BAM</div>
+                                  {!bot.premium && (
+                                    <div className="text-xs line-through text-muted-foreground">
+                                      {bot.originalPrice} BAM
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             )
                           })}
@@ -415,12 +521,12 @@ export default function ContactPage() {
 
                         <div className="bg-primary/10 rounded-xl p-6 border-2 border-primary/30">
                           <div className="text-center">
-                            <div className="text-sm text-muted-foreground mb-2">Ukupna mjesečna cijena</div>
+                            <div className="text-sm text-muted-foreground mb-2">Cijena prvih 3 mjeseca</div>
                             <div className="text-5xl font-bold text-gradient mb-2">
                               {totalPrice}
                               <span className="text-2xl ml-2">BAM</span>
                             </div>
-                            <div className="text-sm text-muted-foreground">mjesečno</div>
+                            <div className="text-sm text-primary font-semibold">50% popust!</div>
                           </div>
                         </div>
 
