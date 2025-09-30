@@ -2,7 +2,7 @@ import { Resend } from "resend"
 import { NextResponse } from "next/server"
 import { ContactEmailTemplate } from "@/components/email-template"
 
-const resend = new Resend("re_5Po7PpaL_B69M46fmAAgNvCByF3S7trPx")
+const resend = new Resend("re_ALGFooqw_7y5NYNVjuoQuDRXZ5R4o88H1")
 
 export async function POST(request: Request) {
   try {

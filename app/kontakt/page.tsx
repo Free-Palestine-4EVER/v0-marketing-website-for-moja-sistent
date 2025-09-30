@@ -9,8 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowLeft, Mail, MessageCircle, Sparkles, CheckCircle2, Calculator, Tag } from "lucide-react"
+import { ArrowLeft, Mail, MessageCircle, Sparkles, CheckCircle2, Calculator, Tag, Check } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -91,19 +90,16 @@ export default function ContactPage() {
   const totalPrice = calculateTotal()
   const selectedBotsCount = selectedBots.length
 
-  const toggleBot = (botId: string) => {
+  const toggleBot = (botId: string, e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     setSelectedBots((prev) => (prev.includes(botId) ? prev.filter((id) => id !== botId) : [...prev, botId]))
-    // Clear package selection when individual bot is selected
-    setSelectedPackage(null)
   }
 
-  const selectPackage = (packageId: string) => {
-    if (selectedPackage === packageId) {
-      setSelectedPackage(null)
-    } else {
-      setSelectedPackage(packageId)
-      setSelectedBots([])
-    }
+  const selectPackage = (packageId: string, e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setSelectedPackage((prev) => (prev === packageId ? null : packageId))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -271,7 +267,7 @@ export default function ContactPage() {
                               ? "border-2 border-primary bg-primary/5 shadow-lg"
                               : "border-2 border-border/50 hover:border-primary/50"
                           }`}
-                          onClick={() => selectPackage(pkg.id)}
+                          onClick={(e) => selectPackage(pkg.id, e)}
                         >
                           <CardContent className="p-3 text-center">
                             {pkg.promo && (
@@ -316,7 +312,7 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    {/* Individual Bot Selection - Reduced padding and removed pointer-events-none */}
+                    {/* Individual Bot Selection - Removed disabled states */}
                     <div className="space-y-2">
                       <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
                         Standardni botovi
@@ -335,16 +331,22 @@ export default function ContactPage() {
                                 selectedBots.includes(bot.id)
                                   ? "border-2 border-primary bg-primary/5"
                                   : "border-2 border-border/50 hover:border-primary/30"
-                              } ${selectedPackage ? "opacity-50 pointer-events-none" : ""}`}
-                              onClick={() => !selectedPackage && toggleBot(bot.id)}
+                              }`}
+                              onClick={(e) => toggleBot(bot.id, e)}
                             >
                               <CardContent className="p-3">
                                 <div className="flex items-start gap-2">
-                                  <Checkbox
-                                    checked={selectedBots.includes(bot.id)}
-                                    disabled={!!selectedPackage}
-                                    className="mt-0.5"
-                                  />
+                                  <div
+                                    className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                                      selectedBots.includes(bot.id)
+                                        ? "bg-primary border-primary"
+                                        : "border-muted-foreground/30"
+                                    }`}
+                                  >
+                                    {selectedBots.includes(bot.id) && (
+                                      <Check className="h-3.5 w-3.5 text-primary-foreground" />
+                                    )}
+                                  </div>
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-1.5 mb-0.5">
                                       <h4 className="font-semibold text-sm">{bot.name}</h4>
@@ -381,16 +383,20 @@ export default function ContactPage() {
                                 selectedBots.includes(bot.id)
                                   ? "border-primary bg-gradient-to-br from-primary/10 to-primary/5"
                                   : "border-primary/30 bg-gradient-to-br from-primary/5 to-transparent hover:border-primary/50"
-                              } ${selectedPackage ? "opacity-50 pointer-events-none" : ""}`}
-                              onClick={() => !selectedPackage && toggleBot(bot.id)}
+                              }`}
+                              onClick={(e) => toggleBot(bot.id, e)}
                             >
                               <CardContent className="p-3">
                                 <div className="flex items-start gap-2">
-                                  <Checkbox
-                                    checked={selectedBots.includes(bot.id)}
-                                    disabled={!!selectedPackage}
-                                    className="mt-0.5"
-                                  />
+                                  <div
+                                    className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                                      selectedBots.includes(bot.id) ? "bg-primary border-primary" : "border-primary/30"
+                                    }`}
+                                  >
+                                    {selectedBots.includes(bot.id) && (
+                                      <Check className="h-3.5 w-3.5 text-primary-foreground" />
+                                    )}
+                                  </div>
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-1.5 mb-0.5">
                                       <h4 className="font-semibold text-sm">{bot.name}</h4>
@@ -473,6 +479,7 @@ export default function ContactPage() {
                         </Label>
                         <Input
                           id="phone"
+                          type="tel"
                           placeholder="+387 XX XXX XXX"
                           className="mt-1 h-9"
                           value={formData.phone}
@@ -545,7 +552,7 @@ export default function ContactPage() {
                                       <div className="font-semibold text-sm">{pkg.name}</div>
                                       <div className="text-xs text-muted-foreground">{pkg.bots} botova uključeno</div>
                                       {pkg.promo && (
-                                        <div className="text-xs text-primary font-semibold mt-0.5">Prvih 3 mjeseca</div>
+                                        <div className="text-xs text-primary font-semibold mt-0.5">Prvih 3 mj.</div>
                                       )}
                                     </div>
                                   </div>
