@@ -41,6 +41,20 @@ export const metadata: Metadata = {
     siteName: "MojAsistent.ba",
     locale: "bs_BA",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 1200,
+        alt: "MojAsistent.ba - AI Zaposlenici",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MojAsistent.ba - AI Zaposlenici",
+    description: "Vaši pomoćnici koji nikad ne spavaju",
+    images: ["/og-image.png"],
   },
 }
 
