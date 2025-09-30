@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation"
 const pricingPlans = [
   {
     name: "Pojedinačni bot",
-    price: "200",
+    price: "100",
+    originalPrice: "200",
     currency: "BAM",
     period: "mjesečno",
+    promoText: "Prvih 3 mjeseca",
     description: "Idealno za manje biznise koji trebaju automatizaciju jedne platforme",
     features: [
       "1 AI chatbot po izboru",
@@ -25,9 +27,11 @@ const pricingPlans = [
   },
   {
     name: "Paket 5 botova",
-    price: "750",
+    price: "350",
+    originalPrice: "750",
     currency: "BAM",
     period: "mjesečno",
+    promoText: "Prvih 3 mjeseca",
     description: "Najbolja vrijednost za biznise koji žele potpunu automatizaciju",
     features: [
       "5 AI chatbotova (svi tipovi)",
@@ -41,7 +45,7 @@ const pricingPlans = [
     ],
     popular: true,
     cta: "Kontaktiraj nas",
-    savings: "Ušteda od 250 BAM mjesečno!",
+    savings: "Ušteda od 400 BAM za prvih 3 mjeseca!",
   },
   {
     name: "Assistant Army",
@@ -51,8 +55,8 @@ const pricingPlans = [
     description: "Kompletno AI rješenje sa premium asistentima za maksimalnu automatizaciju",
     features: [
       "5 standardnih AI chatbotova",
-      "Instagram Post Bot (750 BAM vrijednost)",
-      "Voice Assistant za pozive (500 BAM vrijednost)",
+      "Instagram Post Bot (500 BAM vrijednost)",
+      "Voice Assistant za pozive (750 BAM vrijednost)",
       "24/7 premium podrška",
       "Prioritetno podešavanje i obuka",
       "Napredni izvještaji i analitika",
@@ -70,7 +74,7 @@ const pricingPlans = [
 const premiumAddOns = [
   {
     name: "Instagram Post Bot",
-    price: "750",
+    price: "500",
     currency: "BAM",
     period: "mjesečno",
     description: "Automatski kreira i objavljuje Instagram postove koristeći AI",
@@ -84,10 +88,10 @@ const premiumAddOns = [
   },
   {
     name: "Voice Call Bot",
-    price: "500",
+    price: "750",
     currency: "BAM",
     period: "mjesečno",
-    description: "AI asistent koji obavlja i prima telefonske pozive",
+    description: "AI asistent koji obavlja i prima telefonske pozive - cijena od 750 BAM",
     features: [
       "Prirodan glasovni razgovor",
       "Zakazivanje termina",
@@ -111,6 +115,10 @@ export function PricingSection() {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
             Transparentne cijene bez skrivenih troškova. Sve što trebate za uspješnu automatizaciju vašeg biznisa.
           </p>
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium shadow-lg mt-6">
+            <Star className="h-4 w-4 fill-current" />
+            50% popust na prvih 3 mjeseca!
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -146,10 +154,16 @@ export function PricingSection() {
               <CardHeader className="text-center pb-8 pt-8">
                 <CardTitle className="text-2xl font-bold mb-2">{plan.name}</CardTitle>
                 <div className="mb-4">
+                  {plan.originalPrice && (
+                    <div className="text-2xl text-muted-foreground line-through mb-1">
+                      {plan.originalPrice} {plan.currency}
+                    </div>
+                  )}
                   <span className="text-5xl font-bold text-gradient">{plan.price}</span>
                   <span className="text-xl text-muted-foreground ml-2">
                     {plan.currency} / {plan.period}
                   </span>
+                  {plan.promoText && <div className="text-sm text-primary font-medium mt-2">{plan.promoText}</div>}
                 </div>
                 <p className="text-muted-foreground text-pretty">{plan.description}</p>
                 {plan.savings && (

@@ -127,22 +127,14 @@
 
 /* Enhanced custom gradient and animation classes for premium effects */
 .gradient-glow {
-  background: linear-gradient(
-    135deg,
-    oklch(0.75 0.12 320),
-    oklch(0.65 0.15 280)
-  );
+  background: linear-gradient(135deg, oklch(0.75 0.12 320), oklch(0.65 0.15 280));
   filter: blur(100px);
   opacity: 0.3;
 }
 
 /* Reversed gradient direction: purple (left) to blue (right) */
 .text-gradient {
-  background: linear-gradient(
-    135deg,
-    oklch(0.75 0.12 320),
-    oklch(0.65 0.15 280)
-  );
+  background: linear-gradient(135deg, oklch(0.75 0.12 320), oklch(0.65 0.15 280));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -225,12 +217,7 @@ html {
 }
 
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   background-size: 200px 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -248,12 +235,7 @@ html {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.5s;
 }
 
