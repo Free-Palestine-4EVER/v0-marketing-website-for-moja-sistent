@@ -1,6 +1,9 @@
 "use client"
 
+import { useState } from "react"
+
 import type React from "react"
+import { useEffect } from "react"
 
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -11,7 +14,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ArrowLeft, Mail, MessageCircle, Sparkles, CheckCircle2, Calculator, Tag, Check } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
 import { toast } from "sonner"
 
 const botTypes = [
@@ -76,6 +78,12 @@ export default function ContactPage() {
     message: "",
   })
 
+  useEffect(() => {
+    if (isSubmitted) {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }, [isSubmitted])
+
   const calculateTotal = () => {
     if (selectedPackage) {
       const pkg = packages.find((p) => p.id === selectedPackage)
@@ -107,6 +115,9 @@ export default function ContactPage() {
     e.preventDefault()
 
     console.log("[v0] Form submission started")
+    console.log("[v0] Selected bots:", selectedBots)
+    console.log("[v0] Selected bots count:", selectedBots.length)
+    console.log("[v0] Selected package:", selectedPackage)
 
     // Validation
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.business) {
@@ -133,17 +144,20 @@ export default function ContactPage() {
     console.log("[v0] Sending request to API...")
 
     try {
+      const requestBody = {
+        ...formData,
+        selectedBots,
+        selectedPackage,
+        totalPrice,
+      }
+      console.log("[v0] Request body:", JSON.stringify(requestBody, null, 2))
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          selectedBots,
-          selectedPackage,
-          totalPrice,
-        }),
+        body: JSON.stringify(requestBody),
       })
 
       console.log("[v0] API response status:", response.status)

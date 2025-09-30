@@ -51,6 +51,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/partner" className="text-muted-foreground hover:text-primary transition-colors">
+                  Partner
+                </Link>
+              </li>
+              <li>
                 <Link href="/faq" className="text-muted-foreground hover:text-primary transition-colors">
                   FAQ
                 </Link>
@@ -116,7 +121,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="h-4 w-4" />
-                Bosna i Hercegovina
+                Titova 7, Sarajevo
               </li>
             </ul>
           </div>

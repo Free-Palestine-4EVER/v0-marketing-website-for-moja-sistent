@@ -9,7 +9,16 @@ export async function POST(request: Request) {
     const body = await request.json()
     const { firstName, lastName, email, phone, business, message, selectedBots, selectedPackage, totalPrice } = body
 
-    console.log("[v0] Received contact form submission:", { email, firstName, lastName })
+    console.log("[v0] Received contact form submission:", {
+      email,
+      firstName,
+      lastName,
+      selectedBots,
+      selectedBotsLength: selectedBots?.length,
+      selectedPackage,
+      totalPrice,
+    })
+    console.log("[v0] Selected bots array:", JSON.stringify(selectedBots))
 
     // Send email to client
     const { data, error } = await resend.emails.send({

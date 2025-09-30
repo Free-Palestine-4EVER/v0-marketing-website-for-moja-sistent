@@ -61,6 +61,10 @@ export function Navigation() {
               Primjeri
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
             </Link>
+            <Link href="/partner" className="text-foreground hover:text-primary transition-colors relative group">
+              Partner
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+            </Link>
             <Link href="/faq" className="text-foreground hover:text-primary transition-colors relative group">
               FAQ
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
@@ -157,6 +161,17 @@ export function Navigation() {
                   <div className="flex items-center gap-3">
                     <div className="w-1 h-6 bg-gradient-to-b from-primary/50 to-transparent rounded-full"></div>
                     Primjeri
+                  </div>
+                </Link>
+
+                <Link
+                  href="/partner"
+                  className="block px-4 py-3 text-foreground hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-transparent rounded-xl transition-all duration-300 transform hover:translate-x-1"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-1 h-6 bg-gradient-to-b from-primary/50 to-transparent rounded-full"></div>
+                    Partner
                   </div>
                 </Link>
 
